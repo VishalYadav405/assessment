@@ -1,29 +1,27 @@
-read -p "give liist of ip address: " ip_address
-read -p "give list of user name: " user_name
+#!/bin/bash
 
+read file_name
+read Public_key
 
-for ip in "${ip_address[@]}"
+while read -r user_name ip_address
 do
-	for name in "${user_name[@]}"
-		ssh $name@$ip
-		
-		#checking this public key exists in the authorized keys or not
-		cd ~/.ssh
-		cat authorized_keys		
+    ssh $user_name@ip_address << EOF
+    echo "Connected to the remote machine user name: "$user_name" and ip address: "$ip_address""
 
+    cd ~/.ssh
 
+    if [ -n "$(grep "$Public_key" authorized_keys)" ];then
+        echo "Given public key already exist in the authorized keys of remote machine, user name: $user_name and ip address: $ip_address "
+    else 
+        echo "$Public_key" >> authorized_key
+        echo "Public key added in authorized.key file of remote machine, user name: $user_name and ip address: $ip_address "
+    fi
 
+    echo "Disconnect from the remote machine, user name: $user_name and ip address: $ip_address "
+    
+    EOF
 
-		#to connect public key to authorized keys
-		ssh-copy-id <username>@<ip_address>
-
-
-
-
-		
-	done
-done
-
-
+done < "$file_name"
+ 
 
 
