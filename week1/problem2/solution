@@ -1,9 +1,12 @@
-read command
+#!/bin/bash
 
-if [ -n "$command" ];then
-	eval $command
-else 
-	echo "Command not found"
-fi
+read -p "Enter the command to run: " command
 
+while [ true ]
+do
+  if [[ -z $(pgrep -i "$command") ]]; then
+    $command
+  fi
+  sleep 5
+done
 
