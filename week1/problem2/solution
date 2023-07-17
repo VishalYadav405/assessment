@@ -1,0 +1,9 @@
+read command
+
+if [ -n "$command" ];then
+	eval $command
+else 
+	echo "Command not found"
+fi
+
+
