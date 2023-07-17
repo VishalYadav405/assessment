@@ -4,12 +4,11 @@ read log_file
 awk '{ print $8 $9 }' "$log_file" > temp
 #cat temp
 grep HTTP temp | grep 200 > HTTP_200_error
-#grep HTTP "$log_file" | grep 200 > HTTP_200_error
 
 wc -l HTTP_200_error
 
-grep HTTP "$log_file" >HTTP_200_error
-echo "The count of HTTP responce codes is" >>HTTP_200_error
-wc -l HTTP_200_error >> HTTP_200_error
-rm temp
-#echo "The count of errors is "$total_line"" >> HTTP_200_error 
+#sort "$(awk '{ print $9}' "$log_file")" | uniq -c
+awk '{ print $9}' "$log_file" > responce_codes
+sort responce_codes | uniq -c
+rm responce_codes temp HTTP_200_error
+
