@@ -1,0 +1,38 @@
+read -p "Enter your password: " password
+
+greater_10_length=0
+upper_case=0
+lower_case=0
+special_char=0
+
+
+length=${#password}
+#echo "length of password is "$length""
+
+if [ -n "$length" ] && [ "$length" -gt 9 ]; then
+    greater_10_length=1
+fi
+
+if echo "$password" | grep -q '[[:upper:]]'; then
+    upper_case=1
+fi
+if echo "$password" | grep -q '[[:lower:]]'; then
+    lower_case=1
+fi
+if echo "$password" | grep -q '[^[:alnum:][:space:]]'; then
+    special_char=1
+fi
+
+sum=$((upper_case + lower_case + special_char + greater_10_length))
+
+
+if [ "$sum" -eq 4 ]; then
+    echo "Your password is strong"
+elif [ "$sum" -eq 3 ]; then
+    echo "Your password  strength is high"
+elif [ "$sum" -eq 2 ]; then 
+    echo "Your password strength is medium"
+else
+    echo "Your password is week"
+fi
+

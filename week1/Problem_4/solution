@@ -1,0 +1,29 @@
+read -p "give liist of ip address: " ip_address
+read -p "give list of user name: " user_name
+
+
+for ip in "${ip_address[@]}"
+do
+	for name in "${user_name[@]}"
+		ssh $name@$ip
+		
+		#checking this public key exists in the authorized keys or not
+		cd ~/.ssh
+		cat authorized_keys		
+
+
+
+
+		#to connect public key to authorized keys
+		ssh-copy-id <username>@<ip_address>
+
+
+
+
+		
+	done
+done
+
+
+
+
